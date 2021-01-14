@@ -61,6 +61,10 @@ EOF
    exit 1
 fi
 
+if [ -n "${DEBUG}" ]; then
+    set -o xtrace
+fi
+
 # File-specific tasks
 if test -f .git/hooks/helpers/functions.bash; then
     # shellcheck disable=SC1091
