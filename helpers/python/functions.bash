@@ -52,14 +52,14 @@ function check_python_files {
         (${pylint} --rcfile="${pylintrc}" --reports=no ${pylintargs} "${file}" >"${pylintlog}" 2>&1)
 
         if test $? -ne 0 ; then
-            errors[${lint_issues}]="$(printf "\n - fix lint issues: %s\n\n%s\n" "${file}" "$(grep -E '^[RCWEF]:' "${pylintlog}" | sed 's/^/   /g')")"
+            errors[${lint_issues}]="$(printf " - fix lint issues: %s\n\n%s\n" "${file}" "$(grep -E '^[RCWEF]:' "${pylintlog}" | sed 's/^/   /g')")"
             let lint_issues="lint_issues + 1"
         fi
     done
 
     if test ${lint_issues} -gt 0; then
         for error in "${errors[@]}"; do
-            printf " - %s\n" "${error}"
+            printf "%s\n" "${error}"
         done
         printf "\nPlease fix lint issues before committing\n\n"
         exit 2
