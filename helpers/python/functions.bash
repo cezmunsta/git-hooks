@@ -5,12 +5,12 @@ function get_python_files {
 }
 
 function python_bypass_enabled {
-    local -i use_bypass=0
+    local -i status=1
 
     case "${GIT_BYPASS_PYTHON,,}" in
-        1|y|yes|true) use_bypass=1
+        1|y|yes|true) status=0
     esac
-    return "${use_bypass}"
+    return "${status}"
 }
 
 function check_python {
