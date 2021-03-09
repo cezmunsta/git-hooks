@@ -15,7 +15,7 @@ function python_bypass_enabled {
 
 function check_python {
     local pylint=
-    pylint="$(which pylint 2>&1)"
+    pylint="$(command -v pylint 2>&1)"
     if test -x "${pylint}"; then
         python_bypass_enabled || check_python_files "${pylint}"
     else
@@ -53,7 +53,7 @@ function check_python_files {
 
         if test $? -ne 0 ; then
             errors[${lint_issues}]="$(printf " - fix lint issues: %s\n\n%s\n" "${file}" "$(grep -E '^[RCWEF]:' "${pylintlog}" | sed 's/^/   /g')")"
-            let lint_issues="lint_issues + 1"
+            lint_issues=$((lint_issues + 1))
         fi
     done
 
