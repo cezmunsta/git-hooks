@@ -6,6 +6,10 @@
 # it wants to stop the commit.
 #
 # To enable this hook, rename this file to "pre-commit".
+# shellcheck disable=SC2155
+declare -r HOOKS_DIR="$(realpath "$(dirname "${0}")")"
+export HOOKS_DIR
+
 function msg {
     printf "%s\n" "${*}"
 }

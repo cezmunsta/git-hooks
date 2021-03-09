@@ -30,7 +30,7 @@ function check_python_files {
     # shellcheck disable=SC2155
     local py_version="$(env python --version)"
     local pylint="${1}"
-    local pylintrc="etc/python/.pylintrc"
+    local pylintrc="${HOOKS_DIR}/etc/python/.pylintrc"
     local pylintlog="lint.log"
     local pylintargs=""
 
