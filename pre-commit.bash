@@ -26,6 +26,14 @@ function info {
     msg "*** INFO ***" "${@}"
 }
 
+function check_wc {
+    if man wc | grep -q coreutils; then
+        wc -c
+    else
+        wc -c | grep -oE '[0-9]+'
+    fi
+}
+
 
 if git rev-parse --verify HEAD >/dev/null 2>&1
 then
@@ -49,7 +57,7 @@ if [ "$allownonascii" != "true" ] &&
    # even required, for portability to Solaris 10's /usr/bin/tr), since
    # the square bracket bytes happen to fall in the designated range.
    test "$(git diff --cached --name-only --diff-filter=A -z $against |
-     LC_ALL=C tr -d '[ -~]\0' | wc -c)" != "0"
+     LC_ALL=C tr -d '[ -~]\0' | check_wc)" != "0"
 then
    cat <<\EOF
 Error: Attempt to add a non-ASCII file name.
