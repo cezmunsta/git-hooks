@@ -7,8 +7,11 @@
 #
 # To enable this hook, rename this file to "pre-commit".
 # shellcheck disable=SC2155
+declare -a HELPERS=()
 declare -r HOOKS_DIR="$(realpath "$(dirname "${0}")")"
 export HOOKS_DIR
+
+mapfile -t HELPERS < <(find .git/hooks/helpers -maxdepth 1 -type d -not -name helpers -exec basename {} \;)
 
 function msg {
     printf "%s\n" "${*}"
@@ -86,7 +89,7 @@ else
 fi
 
 if ! bypass_enabled; then
-    for ft in shell python; do
+    for ft in "${HELPERS[@]}"; do
         if test -f ".git/hooks/helpers/${ft}/functions.bash"; then
             # shellcheck disable=SC1090,SC1091
             source ".git/hooks/helpers/${ft}/functions.bash"
